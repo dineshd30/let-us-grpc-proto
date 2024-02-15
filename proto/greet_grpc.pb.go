@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	GreeterService_SayHelloUniary_FullMethodName                 = "/greeter_service.GreeterService/SayHelloUniary"
+	GreeterService_SayHelloUnary_FullMethodName                  = "/greeter_service.GreeterService/SayHelloUnary"
 	GreeterService_SayHelloServerStreaming_FullMethodName        = "/greeter_service.GreeterService/SayHelloServerStreaming"
 	GreeterService_SayHelloClientStreaming_FullMethodName        = "/greeter_service.GreeterService/SayHelloClientStreaming"
 	GreeterService_SayHelloBidirectionalStreaming_FullMethodName = "/greeter_service.GreeterService/SayHelloBidirectionalStreaming"
@@ -29,7 +29,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GreeterServiceClient interface {
-	SayHelloUniary(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
+	SayHelloUnary(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
 	SayHelloServerStreaming(ctx context.Context, in *NamesList, opts ...grpc.CallOption) (GreeterService_SayHelloServerStreamingClient, error)
 	SayHelloClientStreaming(ctx context.Context, opts ...grpc.CallOption) (GreeterService_SayHelloClientStreamingClient, error)
 	SayHelloBidirectionalStreaming(ctx context.Context, opts ...grpc.CallOption) (GreeterService_SayHelloBidirectionalStreamingClient, error)
@@ -43,9 +43,9 @@ func NewGreeterServiceClient(cc grpc.ClientConnInterface) GreeterServiceClient {
 	return &greeterServiceClient{cc}
 }
 
-func (c *greeterServiceClient) SayHelloUniary(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
+func (c *greeterServiceClient) SayHelloUnary(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
 	out := new(HelloResponse)
-	err := c.cc.Invoke(ctx, GreeterService_SayHelloUniary_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, GreeterService_SayHelloUnary_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +153,7 @@ func (x *greeterServiceSayHelloBidirectionalStreamingClient) Recv() (*HelloRespo
 // All implementations must embed UnimplementedGreeterServiceServer
 // for forward compatibility
 type GreeterServiceServer interface {
-	SayHelloUniary(context.Context, *HelloRequest) (*HelloResponse, error)
+	SayHelloUnary(context.Context, *HelloRequest) (*HelloResponse, error)
 	SayHelloServerStreaming(*NamesList, GreeterService_SayHelloServerStreamingServer) error
 	SayHelloClientStreaming(GreeterService_SayHelloClientStreamingServer) error
 	SayHelloBidirectionalStreaming(GreeterService_SayHelloBidirectionalStreamingServer) error
@@ -164,8 +164,8 @@ type GreeterServiceServer interface {
 type UnimplementedGreeterServiceServer struct {
 }
 
-func (UnimplementedGreeterServiceServer) SayHelloUniary(context.Context, *HelloRequest) (*HelloResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SayHelloUniary not implemented")
+func (UnimplementedGreeterServiceServer) SayHelloUnary(context.Context, *HelloRequest) (*HelloResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SayHelloUnary not implemented")
 }
 func (UnimplementedGreeterServiceServer) SayHelloServerStreaming(*NamesList, GreeterService_SayHelloServerStreamingServer) error {
 	return status.Errorf(codes.Unimplemented, "method SayHelloServerStreaming not implemented")
@@ -189,20 +189,20 @@ func RegisterGreeterServiceServer(s grpc.ServiceRegistrar, srv GreeterServiceSer
 	s.RegisterService(&GreeterService_ServiceDesc, srv)
 }
 
-func _GreeterService_SayHelloUniary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _GreeterService_SayHelloUnary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HelloRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GreeterServiceServer).SayHelloUniary(ctx, in)
+		return srv.(GreeterServiceServer).SayHelloUnary(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GreeterService_SayHelloUniary_FullMethodName,
+		FullMethod: GreeterService_SayHelloUnary_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GreeterServiceServer).SayHelloUniary(ctx, req.(*HelloRequest))
+		return srv.(GreeterServiceServer).SayHelloUnary(ctx, req.(*HelloRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -288,8 +288,8 @@ var GreeterService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*GreeterServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SayHelloUniary",
-			Handler:    _GreeterService_SayHelloUniary_Handler,
+			MethodName: "SayHelloUnary",
+			Handler:    _GreeterService_SayHelloUnary_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -21,7 +21,7 @@ message MessageList{
 }
 
 service GreeterService {
-  rpc SayHelloUniary(HelloRequest) returns (HelloResponse);
+  rpc SayHelloUnary(HelloRequest) returns (HelloResponse);
   rpc SayHelloServerStreaming(NamesList) returns (stream HelloResponse);
   rpc SayHelloClientStreaming(stream HelloRequest) returns (MessageList);
   rpc SayHelloBidirectionalStreaming(stream HelloRequest) returns (stream HelloResponse);
